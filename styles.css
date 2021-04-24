@@ -1,0 +1,64 @@
+/* // blue 28,29,104
+// orange 252,245,46
+// grey 123,123,123 */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+
+* {
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(252, 145, 46);
+  justify-content: center;
+  align-items: center;
+  border-bottom: rgb(28, 29, 104) solid 5px;
+}
+
+header h1 {
+  color: rgb(245, 245, 245);
+  position: relative;
+  font-weight: 700;
+}
+
+.flex-container {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 0;
+}
+
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 24vw;
+  padding: 0;
+  margin: 5px;
+  margin-top: 10px;
+  /* border: 1px solid #000000; */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.graph-title {
+  font-weight: 400;
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.graph {
+  width: 23vw;
+  height: 30vh;
+}
