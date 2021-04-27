@@ -14,12 +14,99 @@
     <title>Guarapuvu</title>
 </head>
 <body>
-    <header>
-        <h1>
-        Telemetria Guarapuvu
-        </h1>
-    </header>
-    <section>
+    <section class="dashboard">
+        <div class="flex-container">
+            <div class="version-info">
+                <h3 class="version-title">Telemetria Guarapuvu 2021</h3>
+            </div>
+            <div class="warning-container">
+                <h3 class="warning-title">
+                    Warnings
+                </h3>
+                <div class="warnings-container">
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            overTemperature
+                        </h3>
+                        <div class="warning-data"></div>
+                    </div>
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            overCurrent
+                        </h3>
+                        <div class="warning-data"></div>
+                    </div>
+
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            CHG
+                        </h3>
+                        <div class="warning-data"></div>
+                    </div>
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            DSG
+                        </h3>
+                        <div class="warning-data"></div></div>
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            underVoltage
+                        </h3>
+                        <div class="warning-data"></div>
+                    </div>
+                    <div class="single-warning-container">
+                        <h3 class="warning-title">
+                            overVoltage
+                        </h3>
+                        <div class="warning-data"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-container">
+            <div class="info-container">
+                <h3 class="info-title">
+                    Power (W)
+                </h3>
+                <p id="power" class="info">
+                    0
+                </p>
+            </div>
+            <div class="info-container">
+                <h3 class="info-title">
+                    SoC (%)
+                </h3>
+                <p id="SoC" class="info">
+                    0%
+                </p>
+            </div>
+            <div class="info-container">
+                <h3 class="info-title">
+                    VPack (V)
+                </h3>
+                <p id="VPack" class="info">
+                    0
+                </p>
+            </div>
+            <div class="info-container">
+                <h3 class="info-title">
+                    Current (A)
+                </h3>
+                <p id="current" class="info">
+                    0
+                </p>
+            </div>
+            <div class="info-container">
+                <h3 class="info-title">
+                    Temperature (°C)
+                </h3>
+                <p id="temperature" class="info">
+                    0
+                </p>
+            </div>
+        </div>
+        
         <div class="flex-container">
             <div class="graph-container">
                 <h3 class="graph-title">
