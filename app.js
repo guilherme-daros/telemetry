@@ -1,7 +1,66 @@
+const brokerIp = ""
+const brokerPort = 9001
+const username = ""
+const password = ""
+
+var boatBattery = {
+    power,
+    overTemperature: false,
+    overCurrent: false,
+    CHG: false,
+    DSG: false,
+    underVoltage: false,
+    overVoltage: false,
+    SoC,
+    current,
+    vPack: 0,
+    cTemp: {
+        cell1: 0,
+        cell2: 0,
+        cell3: 0,
+        cell4: 0,
+        cell5: 0,
+        cell6: 0,
+        cell7: 0,
+        cell8: 0
+    },
+    cVoltage: {
+        cell1: 0,
+        cell2: 0,
+        cell3: 0,
+        cell4: 0,
+        cell5: 0,
+        cell6: 0,
+        cell7: 0,
+        cell8: 0
+    }
+}
+
 const ctx0 = document.getElementById("graph0").getContext("2d");
 const ctx1 = document.getElementById("graph1").getContext("2d");
 const ctx2 = document.getElementById("graph2").getContext("2d");
 const ctx3 = document.getElementById("graph3").getContext("2d");
+const client = new Paho.MQTT.Client(brokerIp, brokerPort, username);
+
+client.onConnectionLost = (responseObject) => {
+    if (responseObject.errorCode !== 0) {
+        console.log("onConnectionLost:"+responseObject.errorMessage);
+      }
+};
+client.onMessageArrived = (message) => {
+    const topic = message.destinationName;
+    if(topic = "0x186455F4"){
+        document.getElementById("SoC").innerHTML = Number(message.payloadString.split(";")[3])
+    }
+};
+
+client.connect({
+    onSuccess: () => {
+        console.log("Connected Succesfully");
+        client.subscribe("#");
+
+}});
+
 
 const chart0 = new Chart(ctx0, {
     type: 'line',
