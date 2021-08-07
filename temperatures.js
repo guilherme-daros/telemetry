@@ -1,8 +1,3 @@
-const brokerIp = "192.168.0.192";
-const brokerPort = 9001;
-const username = "";
-const password = "";
-
 var boatBattery = {
   cTemp: {
     cell1: 0,

@@ -1,32 +1,32 @@
 {
-    "power": 0,
-    "overTemperature": false,
-    "overCurrent": false,
-    "CHG": false,
-    "DSG": false,
-    "underVoltage": false,
-    "overVoltage": false,
-    "SoC": 0,
-    "current": 0,
-    "vPack": 0,
-    "cTemp": {
-        "cell1": 0,
-        "cell2": 0,
-        "cell3": 0,
-        "cell4": 0,
-        "cell5": 0,
-        "cell6": 0,
-        "cell7": 0,
-        "cell8": 0
-    },
-    "cVoltage": {
-        "cell1": 0,
-        "cell2": 0,
-        "cell3": 0,
-        "cell4": 0,
-        "cell5": 0,
-        "cell6": 0,
-        "cell7": 0,
-        "cell8": 0
-    }
+  "power": 0,
+  "overTemperature": false,
+  "overCurrent": false,
+  "CHG": false,
+  "DSG": false,
+  "underVoltage": false,
+  "overVoltage": false,
+  "SoC": 0,
+  "current": 0,
+  "vPack": 0,
+  "cTemp": {
+    "cell1": 0,
+    "cell2": 0,
+    "cell3": 0,
+    "cell4": 0,
+    "cell5": 0,
+    "cell6": 0,
+    "cell7": 0,
+    "cell8": 0
+  },
+  "cVoltage": {
+    "cell1": 0,
+    "cell2": 0,
+    "cell3": 0,
+    "cell4": 0,
+    "cell5": 0,
+    "cell6": 0,
+    "cell7": 0,
+    "cell8": 0
+  }
 }

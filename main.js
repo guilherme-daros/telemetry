@@ -1,7 +1,3 @@
-const brokerIp = "192.168.0.192";
-const brokerPort = 9001;
-const username = "";
-const password = "";
 const client = new Paho.MQTT.Client(brokerIp, brokerPort, username);
 
 const warningColors = {
@@ -9,16 +5,42 @@ const warningColors = {
   green: "#00ca00",
 };
 
-const updateGraph = (graph) => {
-  graph.data.labels.push(0);
-  graph.data.datasets[0].data.push(boatBattery.cPack);
-  if (graph.data.datasets[0].data.length > 100) {
-    graph.data.datasets[0].data[0] = graph.data.datasets[0].data[1];
-    graph.data.datasets[0].data.splice(1, 1);
-    graph.data.labels.shift();
+function updateCGraph() {
+  interface.cGraph.data.labels.push(0);
+  interface.cGraph.data.datasets[0].data.push(boatBattery.cPack);
+  if (interface.cGraph.data.datasets[0].data.length > 100) {
+    interface.cGraph.data.datasets[0].data[0] =
+      interface.cGraph.data.datasets[0].data[1];
+    interface.cGraph.data.datasets[0].data.splice(1, 1);
+    interface.cGraph.data.labels.shift();
   }
-  graph.update();
-};
+  interface.cGraph.update();
+}
+
+function updateVGraph() {
+  interface.vGraph.data.labels.push(0);
+  interface.vGraph.data.datasets[0].data.push(boatBattery.vPack);
+
+  if (interface.vGraph.data.datasets[0].data.length > 100) {
+    interface.vGraph.data.datasets[0].data[0] =
+      interface.vGraph.data.datasets[0].data[1];
+    interface.vGraph.data.datasets[0].data.splice(1, 1);
+    interface.vGraph.data.labels.shift();
+  }
+  interface.vGraph.update();
+}
+
+function updateTGraph() {
+  interface.tGraph.data.labels.push(0);
+  interface.tGraph.data.datasets[0].data.push(boatBattery.tPack);
+  if (interface.tGraph.data.datasets[0].data.length > 100) {
+    interface.tGraph.data.datasets[0].data[0] =
+      interface.tGraph.data.datasets[0].data[1];
+    interface.tGraph.data.datasets[0].data.splice(1, 1);
+    interface.tGraph.data.labels.shift();
+  }
+  interface.tGraph.update();
+}
 
 const boatBattery = {
   warnings: {
@@ -80,7 +102,6 @@ const defaultGraphOptions = {
     },
   },
 };
-
 const defaultVGraphOptions = {
   ...defaultGraphOptions,
   options: {
@@ -91,7 +112,7 @@ const defaultVGraphOptions = {
         {
           display: true,
           ticks: {
-            min: 180,
+            min: 0,
             max: 300,
             stepSize: 20,
             callback: (value) => `${value / 10} V`,
@@ -101,7 +122,6 @@ const defaultVGraphOptions = {
     },
   },
 };
-
 const defaultCGraphOptions = {
   ...defaultGraphOptions,
   options: {
@@ -152,6 +172,7 @@ const warningIdList = [
   "overVoltage",
 ];
 const infoIdList = ["power", "SoC", "vPackInfo", "cPackInfo", "tPackInfo"];
+
 let interface = {};
 
 window.onload = () => {
@@ -182,7 +203,10 @@ window.onload = () => {
   client.connect({
     onSuccess: () => {
       console.log("MQTT Connected Succesfully");
-      client.subscribe("#");
+      client.subscribe("0x186455F4");
+      client.subscribe("0x186555F4");
+      client.subscribe("0x186655F4");
+      client.subscribe("0x186755F4");
     },
   });
 };
@@ -196,19 +220,14 @@ client.onConnectionLost = (responseObject) => {
 client.onMessageArrived = (message) => {
   const topic = message.destinationName;
   const data = message.payloadString.split(";");
-
-  const {
-    overTemperature,
-    overCurrent,
-    CHG,
-    DSG,
-    overVoltage,
-    underVoltage,
-  } = interface.warningList;
-
-  const { red, green } = warningColors;
+  console.log(topic);
+  console.log(data);
+  const { overTemperature, overCurrent, CHG, DSG, overVoltage, underVoltage } =
+    interface.warningList;
 
   const { SoC, cPackInfo, vPackInfo, tPackInfo, power } = interface.infoList;
+
+  const { red, green } = warningColors;
 
   switch (topic) {
     case "0x186455F4":
@@ -230,12 +249,11 @@ client.onMessageArrived = (message) => {
 
       boatBattery.cPack = (parseInt(data[2]) + parseInt(data[1])) / 2;
       cPackInfo.innerHTML = `${boatBattery.cPack / 10} A`;
+      updateCGraph();
 
       boatBattery.vPack = parseInt(data[0]);
       vPackInfo.innerHTML = `${boatBattery.vPack / 10} V`;
-
-      updateGraph(interface.cGraph);
-      updateGraph(interface.vGraph);
+      updateVGraph();
 
       break;
 
@@ -248,7 +266,7 @@ client.onMessageArrived = (message) => {
         Object.values(boatBattery.cellTemp).reduce((a, b) => a + b, 0) /
           Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
             .length || 0;
-      tPackInfo.innerHTML = `${boatBattery.tPack / 10} + °C`;
+      tPackInfo.innerHTML = `${boatBattery.tPack / 10} °C`;
       break;
 
     case "0x186755F4":
@@ -261,7 +279,7 @@ client.onMessageArrived = (message) => {
           Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
             .length || 0;
       tPackInfo.innerHTML = `${boatBattery.tPack / 10} °C`;
-      updateGraph(interface.tGraph);
+      updateTGraph();
       break;
 
     default:
