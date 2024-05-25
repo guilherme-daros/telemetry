@@ -1,178 +1,5 @@
 const client = new Paho.MQTT.Client(brokerIp, brokerPort, username);
 
-const warningColors = {
-  red: "#ff0000",
-  green: "#00ca00",
-};
-
-function updateCGraph() {
-  interface.cGraph.data.labels.push(0);
-  interface.cGraph.data.datasets[0].data.push(boatBattery.cPack);
-  if (interface.cGraph.data.datasets[0].data.length > 100) {
-    interface.cGraph.data.datasets[0].data[0] =
-      interface.cGraph.data.datasets[0].data[1];
-    interface.cGraph.data.datasets[0].data.splice(1, 1);
-    interface.cGraph.data.labels.shift();
-  }
-  interface.cGraph.update();
-}
-
-function updateVGraph() {
-  interface.vGraph.data.labels.push(0);
-  interface.vGraph.data.datasets[0].data.push(boatBattery.vPack);
-
-  if (interface.vGraph.data.datasets[0].data.length > 100) {
-    interface.vGraph.data.datasets[0].data[0] =
-      interface.vGraph.data.datasets[0].data[1];
-    interface.vGraph.data.datasets[0].data.splice(1, 1);
-    interface.vGraph.data.labels.shift();
-  }
-  interface.vGraph.update();
-}
-
-function updateTGraph() {
-  interface.tGraph.data.labels.push(0);
-  interface.tGraph.data.datasets[0].data.push(boatBattery.tPack);
-  if (interface.tGraph.data.datasets[0].data.length > 100) {
-    interface.tGraph.data.datasets[0].data[0] =
-      interface.tGraph.data.datasets[0].data[1];
-    interface.tGraph.data.datasets[0].data.splice(1, 1);
-    interface.tGraph.data.labels.shift();
-  }
-  interface.tGraph.update();
-}
-
-const boatBattery = {
-  warnings: {
-    overTemperature: false,
-    overCurrent: false,
-    CHG: false,
-    DSG: false,
-    underVoltage: false,
-    overVoltage: false,
-  },
-  power: 0,
-  SoC: 0,
-  cPack: 0,
-  vPack: 0,
-  tPack: 0,
-  cellTemp: {
-    cell1: 0,
-    cell2: 0,
-    cell3: 0,
-    cell4: 0,
-    cell5: 0,
-    cell6: 0,
-    cell7: 0,
-    cell8: 0,
-  },
-};
-
-const defaultGraphOptions = {
-  type: "line",
-  data: {
-    datasets: [
-      {
-        data: [],
-      },
-    ],
-  },
-  options: {
-    animation: false,
-    legend: {
-      display: false,
-    },
-    scales: {
-      xAxes: [{ display: false }],
-      yAxes: [
-        {
-          display: true,
-        },
-      ],
-    },
-    elements: {
-      line: {
-        borderWidth: 1,
-        backgroundColor: "rgba(252,145,46,0.01)",
-        borderColor: "rgb(252,145,46)",
-      },
-      point: {
-        radius: 0,
-      },
-    },
-  },
-};
-const defaultVGraphOptions = {
-  ...defaultGraphOptions,
-  options: {
-    ...defaultGraphOptions.options,
-    scales: {
-      ...defaultGraphOptions.options.scales,
-      yAxes: [
-        {
-          display: true,
-          ticks: {
-            min: 0,
-            max: 300,
-            stepSize: 20,
-            callback: (value) => `${value / 10} V`,
-          },
-        },
-      ],
-    },
-  },
-};
-const defaultCGraphOptions = {
-  ...defaultGraphOptions,
-  options: {
-    ...defaultGraphOptions.options,
-    scales: {
-      ...defaultGraphOptions.options.scales,
-      yAxes: [
-        {
-          display: true,
-          ticks: {
-            min: 0,
-            max: 2000,
-            stepSize: 400,
-            callback: (value) => `${value / 10} A`,
-          },
-        },
-      ],
-    },
-  },
-};
-const defaultTGraphOptions = {
-  ...defaultGraphOptions,
-  options: {
-    ...defaultGraphOptions.options,
-    scales: {
-      ...defaultGraphOptions.options.scales,
-      yAxes: [
-        {
-          display: true,
-          ticks: {
-            min: 200,
-            max: 1000,
-            stepSize: 200,
-            callback: (value) => `${value / 10} °C`,
-          },
-        },
-      ],
-    },
-  },
-};
-
-const warningIdList = [
-  "overTemperature",
-  "overCurrent",
-  "CHG",
-  "DSG",
-  "underVoltage",
-  "overVoltage",
-];
-const infoIdList = ["power", "SoC", "vPackInfo", "cPackInfo", "tPackInfo"];
-
 let interface = {};
 
 window.onload = () => {
@@ -264,8 +91,8 @@ client.onMessageArrived = (message) => {
       boatBattery.cellTemp.cell1 = parseInt(data[0]);
       boatBattery.tPack =
         Object.values(boatBattery.cellTemp).reduce((a, b) => a + b, 0) /
-          Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
-            .length || 0;
+        Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
+          .length || 0;
       tPackInfo.innerHTML = `${boatBattery.tPack / 10} °C`;
       break;
 
@@ -276,8 +103,8 @@ client.onMessageArrived = (message) => {
       boatBattery.cellTemp.cell5 = parseInt(data[0]);
       boatBattery.tPack =
         Object.values(boatBattery.cellTemp).reduce((a, b) => a + b, 0) /
-          Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
-            .length || 0;
+        Object.values(boatBattery.cellTemp).filter((val) => val !== 0)
+          .length || 0;
       tPackInfo.innerHTML = `${boatBattery.tPack / 10} °C`;
       updateTGraph();
       break;

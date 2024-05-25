@@ -1,99 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
 
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <section class="dashboard">
-      <div class="flex-container">
-        <div class="version-info">
-          <h3 class="version-title">
-            Telemetria <br />
-            Guarapuvu 2021
-          </h3>
-        </div>
-        <div class="warning-container">
-          <h3 class="warning-title">Warnings</h3>
-          <div class="warnings-container">
-            <div class="single-warning-container">
-              <h3 class="warning-title">overTemperature</h3>
-              <div id="overTemperature" class="warning-data"></div>
-            </div>
-            <div class="single-warning-container">
-              <h3 class="warning-title">overCurrent</h3>
-              <div id="overCurrent" class="warning-data"></div>
-            </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
 
-            <div class="single-warning-container">
-              <h3 class="warning-title">CHG</h3>
-              <div id="CHG" class="warning-data"></div>
-            </div>
-            <div class="single-warning-container">
-              <h3 class="warning-title">DSG</h3>
-              <div id="DSG" class="warning-data"></div>
-            </div>
-            <div class="single-warning-container">
-              <h3 class="warning-title">underVoltage</h3>
-              <div id="underVoltage" class="warning-data"></div>
-            </div>
-            <div class="single-warning-container">
-              <h3 class="warning-title">overVoltage</h3>
-              <div id="overVoltage" class="warning-data"></div>
-            </div>
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <section class="dashboard">
+    <div class="flex-container">
+      <div class="version-info">
+        <h3 class="version-title">
+          Telemetria <br />
+          Guarapuvu 2021
+        </h3>
+      </div>
+      <div class="warning-container">
+        <h3 class="warning-title">Warnings</h3>
+        <div class="warnings-container">
+          <div class="single-warning-container">
+            <h3 class="warning-title">overTemperature</h3>
+            <div id="overTemperature" class="warning-data"></div>
+          </div>
+          <div class="single-warning-container">
+            <h3 class="warning-title">overCurrent</h3>
+            <div id="overCurrent" class="warning-data"></div>
+          </div>
+
+          <div class="single-warning-container">
+            <h3 class="warning-title">CHG</h3>
+            <div id="CHG" class="warning-data"></div>
+          </div>
+          <div class="single-warning-container">
+            <h3 class="warning-title">DSG</h3>
+            <div id="DSG" class="warning-data"></div>
+          </div>
+          <div class="single-warning-container">
+            <h3 class="warning-title">underVoltage</h3>
+            <div id="underVoltage" class="warning-data"></div>
+          </div>
+          <div class="single-warning-container">
+            <h3 class="warning-title">overVoltage</h3>
+            <div id="overVoltage" class="warning-data"></div>
           </div>
         </div>
       </div>
-      <div class="flex-container">
-        <div class="info-container">
-          <h3 class="info-title">Power (W)</h3>
-          <p id="power" class="info">0</p>
-        </div>
-        <div class="info-container">
-          <h3 class="info-title">SoC (%)</h3>
-          <p id="SoC" class="info">0%</p>
-        </div>
-        <div class="info-container">
-          <h3 class="info-title">VPack (V)</h3>
-          <p id="vPackInfo" class="info">0 V</p>
-        </div>
-        <div class="info-container">
-          <h3 class="info-title">Current (A)</h3>
-          <p id="cPackInfo" class="info">0 A</p>
-        </div>
-        <div class="info-container">
-          <h3 class="info-title">Temperature (°C)</h3>
-          <p id="tPackInfo" class="info">0 °C</p>
-        </div>
+    </div>
+    <div class="flex-container">
+      <div class="info-container">
+        <h3 class="info-title">Power (W)</h3>
+        <p id="power" class="info">0</p>
       </div>
-      <div class="flex-container">
-        <div class="graph-container">
-          <h3 class="graph-title">vPack</h3>
-          <canvas id="vPack" class="graph"></canvas>
-          <a class="see-all" href="./voltages.html" target="_blank">See All</a>
-        </div>
-        <div class="graph-container">
-          <h3 class="graph-title">cPack</h3>
-          <canvas id="cPack" class="graph"></canvas>
-        </div>
-        <div class="graph-container">
-          <h3 class="graph-title">tPack</h3>
-          <canvas id="tPack" class="graph"></canvas>
-          <a class="see-all" href="./temperatures.html" target="_blank"
-            >See All</a
-          >
-        </div>
+      <div class="info-container">
+        <h3 class="info-title">SoC (%)</h3>
+        <p id="SoC" class="info">0%</p>
       </div>
-    </section>
+      <div class="info-container">
+        <h3 class="info-title">VPack (V)</h3>
+        <p id="vPackInfo" class="info">0 V</p>
+      </div>
+      <div class="info-container">
+        <h3 class="info-title">Current (A)</h3>
+        <p id="cPackInfo" class="info">0 A</p>
+      </div>
+      <div class="info-container">
+        <h3 class="info-title">Temperature (°C)</h3>
+        <p id="tPackInfo" class="info">0 °C</p>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="graph-container">
+        <h3 class="graph-title">vPack</h3>
+        <canvas id="vPack" class="graph"></canvas>
+        <a class="see-all" href="./voltages.html" target="_blank">See All</a>
+      </div>
+      <div class="graph-container">
+        <h3 class="graph-title">cPack</h3>
+        <canvas id="cPack" class="graph"></canvas>
+      </div>
+      <div class="graph-container">
+        <h3 class="graph-title">tPack</h3>
+        <canvas id="tPack" class="graph"></canvas>
+        <a class="see-all" href="./temperatures.html" target="_blank">See All</a>
+      </div>
+    </div>
+  </section>
 
-    <script src="./brokerConfig.js"></script>
-    <script src="./main.js"></script>
-  </body>
+  <script src="./brokerConfig.js"></script>
+  <script src="./updateFunctions.js"></script>
+  <script src="./graphConfig.js"></script>
+  <script src="./lists.js"></script>
+  <script src="./main.js"></script>
+</body>
+
 </html>

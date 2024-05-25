@@ -1,4 +1,4 @@
-const brokerIp = "broker.hivemq.com";
-const brokerPort = 8000;
+const brokerIp = "localhost";
+const brokerPort = 8080;
 const username = "";
 const password = "";
