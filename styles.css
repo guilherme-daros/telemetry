@@ -6,7 +6,7 @@
 * {
   font-family: "Open Sans", sans-serif;
 }
-
+html,
 body {
   padding: 0;
   margin: 0;
@@ -15,10 +15,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 .dashboard {
   background-color: #1c1d68;
-  padding: 5px;
+  padding: 2px;
   width: 90vw;
 }
 
@@ -62,43 +63,6 @@ body {
   margin: 5px;
 }
 /* ================================================================== */
-.warning-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f5f5f5;
-  width: 57vw;
-  padding: 5px;
-  margin: 5px;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-.warnings-container {
-  display: flex;
-  flex-direction: row;
-}
-.single-warning-container {
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-  align-items: center;
-  padding: 5px;
-  box-shadow: 0px 0px 10px #0000001a;
-  border-radius: 5px;
-}
-.warning-title {
-  font-weight: 400;
-  font-size: 18px;
-  padding: 0;
-  margin: 5px;
-}
-.warning-data {
-  height: 20px;
-  width: 20px;
-  border-radius: 5px;
-  background-color: #00ca00;
-}
-/* ================================================================== */
 .info-container {
   display: flex;
   flex-direction: column;
@@ -107,17 +71,17 @@ body {
   align-items: center;
   background-color: #f5f5f5;
   padding: 0;
-  margin: 5px;
-  margin-top: 10px;
-  border-radius: 10px;
+  margin: 2px;
+  margin-top: 2px;
+  border-radius: 2px;
 }
 .info-title {
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 15px;
 }
 .info {
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 400;
+  font-size: 12px;
 }
 /* ================================================================== */
 .graph-container {
@@ -127,7 +91,7 @@ body {
   background-color: #f5f5f5;
   width: 23%;
   flex-grow: 1;
-  margin: 5px;
+  margin: 2px;
   padding-bottom: 5px;
   padding-right: 10px;
   margin-top: 10px;
@@ -135,7 +99,7 @@ body {
 }
 
 .graph-title {
-  font-weight: 400;
+  font-weight: 300;
   font-size: 18px;
   padding: 0;
   margin: 0;
@@ -143,5 +107,10 @@ body {
 
 .graph {
   width: 23vw;
-  height: 30vh;
+  height: 25vh;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
 }

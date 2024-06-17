@@ -9,6 +9,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
   <title>Dashboard</title>
 </head>
@@ -18,39 +19,8 @@
     <div class="flex-container">
       <div class="version-info">
         <h3 class="version-title">
-          Telemetria <br />
-          Guarapuvu 2021
+          Telemetria    |    Guarapuvu 2024    |    Equipe Vento Sul
         </h3>
-      </div>
-      <div class="warning-container">
-        <h3 class="warning-title">Warnings</h3>
-        <div class="warnings-container">
-          <div class="single-warning-container">
-            <h3 class="warning-title">overTemperature</h3>
-            <div id="overTemperature" class="warning-data"></div>
-          </div>
-          <div class="single-warning-container">
-            <h3 class="warning-title">overCurrent</h3>
-            <div id="overCurrent" class="warning-data"></div>
-          </div>
-
-          <div class="single-warning-container">
-            <h3 class="warning-title">CHG</h3>
-            <div id="CHG" class="warning-data"></div>
-          </div>
-          <div class="single-warning-container">
-            <h3 class="warning-title">DSG</h3>
-            <div id="DSG" class="warning-data"></div>
-          </div>
-          <div class="single-warning-container">
-            <h3 class="warning-title">underVoltage</h3>
-            <div id="underVoltage" class="warning-data"></div>
-          </div>
-          <div class="single-warning-container">
-            <h3 class="warning-title">overVoltage</h3>
-            <div id="overVoltage" class="warning-data"></div>
-          </div>
-        </div>
       </div>
     </div>
     <div class="flex-container">
@@ -90,9 +60,16 @@
         <canvas id="tPack" class="graph"></canvas>
         <a class="see-all" href="./temperatures.html" target="_blank">See All</a>
       </div>
-    </div>
+    </div>    
   </section>
 
+    <div id="map"></div>
+
+    <!-- prettier-ignore -->
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+      ({key: "AIzaSyCZak7Kgl56CREYyFdNzT3pAQzWYVzhmII", v: "weekly"});</script>
+
+  <script src="./maps.js"></script>
   <script src="./brokerConfig.js"></script>
   <script src="./updateFunctions.js"></script>
   <script src="./graphConfig.js"></script>

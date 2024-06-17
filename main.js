@@ -1,4 +1,4 @@
-const client = new Paho.MQTT.Client(brokerIp, brokerPort, username);
+client = new Paho.MQTT.Client(brokerIp, brokerPort, username);
 
 let interface = {};
 
@@ -28,8 +28,14 @@ window.onload = () => {
   };
 
   client.connect({
+    useSSL: true,
+    timeout: 100,
+    userName: username,
+    password: password,
     onSuccess: () => {
       console.log("MQTT Connected Succesfully");
+      client.subscribe("test");
+      client.subscribe("GPS_Topic");
       client.subscribe("0x186455F4");
       client.subscribe("0x186555F4");
       client.subscribe("0x186655F4");
@@ -57,7 +63,14 @@ client.onMessageArrived = (message) => {
   const { red, green } = warningColors;
 
   switch (topic) {
-    case "0x186455F4":
+    case GPS_Topic:
+      const payload = JSON.parse(data)
+      console.log(payload.location.coordinates)
+      location.lat = parseFloat(payload.location.coordinates[1])
+      location.lng = parseFloat(payload.location.coordinates[0])
+      window.placeMarker(location, window.marker)
+      break;
+    case POWER_Topic:
       boatBattery.power = Number(data[3]);
       power.innerHTML = `${boatBattery.power} W`;
       overTemperature.style.backgroundColor =
@@ -70,7 +83,7 @@ client.onMessageArrived = (message) => {
       underVoltage.style.backgroundColor = data[2][7] == "1" ? red : green;
       break;
 
-    case "0x186555F4":
+    case VOLTAGE_Topic:
       boatBattery.SoC = parseInt(data[3]);
       SoC.innerHTML = `${boatBattery.SoC} %`;
 
@@ -84,7 +97,7 @@ client.onMessageArrived = (message) => {
 
       break;
 
-    case "0x186655F4":
+    case TEMPERATURE_Topic1:
       boatBattery.cellTemp.cell4 = parseInt(data[3]);
       boatBattery.cellTemp.cell3 = parseInt(data[2]);
       boatBattery.cellTemp.cell2 = parseInt(data[1]);
@@ -96,7 +109,7 @@ client.onMessageArrived = (message) => {
       tPackInfo.innerHTML = `${boatBattery.tPack / 10} °C`;
       break;
 
-    case "0x186755F4":
+    case TEMPERATURE_Topic2:
       boatBattery.cellTemp.cell8 = parseInt(data[3]);
       boatBattery.cellTemp.cell7 = parseInt(data[2]);
       boatBattery.cellTemp.cell6 = parseInt(data[1]);
